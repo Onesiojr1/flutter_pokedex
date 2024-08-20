@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/models/simple_pokemon.dart';
 
 class PokeCard extends StatelessWidget {
-  const PokeCard({super.key});
+  final SimplePokemon pokemon;
+
+  const PokeCard({
+    super.key, 
+    required this.pokemon,
+  });
+
+  String getPokemonId(String url) {
+    return url.split('/').where((segment) => segment.isNotEmpty).last;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +53,13 @@ class PokeCard extends StatelessWidget {
                     topRight: Radius.circular(8),
                   ),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      'Bulbasaur',
-                      style: TextStyle(
+                      pokemon.name,
+                      style: const TextStyle(
                         fontSize: 14,
                       ),
                     ),
@@ -61,7 +71,7 @@ class PokeCard extends StatelessWidget {
         ),
         Center(
           child: Image.network(
-            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${getPokemonId(pokemon.url)}.png',
             width: 72,
           ),
         ),

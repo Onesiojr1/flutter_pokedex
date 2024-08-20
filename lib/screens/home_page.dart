@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/models/simple_pokemon.dart';
 import 'package:flutter_pokedex/widgets/poke_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,7 +49,12 @@ class HomePage extends StatelessWidget {
           child: GridView.builder(
             itemCount: names.length,
             itemBuilder: (context, index) {
-              return const PokeCard();
+              return PokeCard(
+                pokemon: SimplePokemon(
+                  name: 'Bulbasaur',
+                  url: 'https://pokeapi.co/api/v2/pokemon/1/'
+                ),
+              );
             },
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
