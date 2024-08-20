@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/widgets/poke_card.dart';
 
 class HomePage extends StatelessWidget {
    HomePage({super.key});
@@ -37,18 +38,23 @@ class HomePage extends StatelessWidget {
       backgroundColor: const Color(0xFFDC0A2D),
       body: Container(
         width: double.infinity,
-        margin: const EdgeInsets.all(9),
+        margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8)
         ),
-        child: GridView.builder(
-          itemCount: names.length,
-          itemBuilder: (context, index) {
-            return Text(names[index]);
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.builder(
+            itemCount: names.length,
+            itemBuilder: (context, index) {
+              return const PokeCard();
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
           ),
         ),
       ), 
