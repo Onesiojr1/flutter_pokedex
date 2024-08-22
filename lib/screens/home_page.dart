@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/blocs/pokemon_bloc.dart';
 import 'package:flutter_pokedex/blocs/pokemon_event.dart';
 import 'package:flutter_pokedex/blocs/pokemon_state.dart';
-import 'package:flutter_pokedex/models/simple_pokemon.dart';
+import 'package:flutter_pokedex/service/pokemon_service.dart';
 import 'package:flutter_pokedex/widgets/poke_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,11 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final PokemonBloc _pokemonBloc;
+  final _pokemonService = PokemonService();
 
   @override
   void initState() {
     super.initState();
-    _pokemonBloc = PokemonBloc();
+    _pokemonBloc = PokemonBloc(_pokemonService);
     _pokemonBloc.add(GetPokemons());
   }
 
@@ -54,38 +55,32 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8)
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: BlocBuilder<PokemonBloc, PokemonState>(
-            bloc: _pokemonBloc,
-            builder: (context, state) {
-              if(state is LoadingPokemonState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is LoadedPokemonState) {
-                final pokemonsList = state.pokemons;
-                 return GridView.builder(
-                  itemCount: pokemonsList.length,
-                  itemBuilder: (context, index) {
-                    return PokeCard(
-                      pokemon: SimplePokemon(
-                        name: pokemonsList[index].name,
-                        url: pokemonsList[index].url,
-                      ),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                );
-              } else {
-                return const SizedBox.shrink(); //TODO: Add error message
-              }
+        child: BlocBuilder<PokemonBloc, PokemonState>(
+          bloc: _pokemonBloc,
+          builder: (context, state) {
+            if(state is LoadingPokemonState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is LoadedPokemonState) {
+              final pokemonsList = state.pokemons;
+               return GridView.builder(
+                itemCount: pokemonsList.length,
+                itemBuilder: (context, index) {
+                  return PokeCard(
+                    pokemon: pokemonsList[index],
+                  );
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+              );
+            } else {
+              return const SizedBox.shrink(); //TODO: Add error message
             }
-          ),
+          }
         ),
       ), 
     );

@@ -5,9 +5,9 @@ import 'package:flutter_pokedex/models/simple_pokemon.dart';
 import 'package:flutter_pokedex/service/pokemon_service.dart';
 
 class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
-  final _pokemonService = PokemonService();
+  final PokemonService pokemonService;
 
-  PokemonBloc() : super(InitialPokemonState()) {
+  PokemonBloc(this.pokemonService) : super(InitialPokemonState()) {
     on(_mapEventToState);
   }
 
@@ -17,7 +17,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     emit(LoadingPokemonState());
 
     if (event is GetPokemons) {
-      pokemons = await _pokemonService.fetchAllPokemons();
+      pokemons = await pokemonService.fetchAllPokemons();
     }
 
     emit(LoadedPokemonState(pokemons: pokemons));
