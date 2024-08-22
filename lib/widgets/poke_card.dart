@@ -35,9 +35,9 @@ class PokeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '#001',
-                style: TextStyle(
+              Text(
+                getPokemonId(pokemon.url),
+                style: const TextStyle(
                   color: Color(0xFF666666),
                   fontSize: 12,
                   fontWeight: FontWeight.w400
