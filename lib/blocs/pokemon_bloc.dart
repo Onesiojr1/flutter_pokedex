@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex/blocs/pokemon_event.dart';
 import 'package:flutter_pokedex/blocs/pokemon_state.dart';
