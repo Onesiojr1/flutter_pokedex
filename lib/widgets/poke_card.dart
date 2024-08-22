@@ -13,60 +13,67 @@ class PokeCard extends StatelessWidget {
     return url.split('/').where((segment) => segment.isNotEmpty).last;
   }
 
+  String getPokemonFormatedId(String url) {
+    final id = url.split('/').where((segment) => segment.isNotEmpty).last;
+    return '#${id.toString().padLeft(3, '0')}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: 104,
-          width: 104,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 5,
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                getPokemonId(pokemon.url),
-                style: const TextStyle(
-                  color: Color(0xFF666666),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400
+        Center(
+          child: Container(
+            height: 104,
+            width: 104,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 5,
                 ),
-              ),
-              Container(
-                height: 44,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFEFEFEF),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), 
-                    topRight: Radius.circular(8),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  getPokemonFormatedId(pokemon.url),
+                  style: const TextStyle(
+                    color: Color(0xFF666666),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      pokemon.name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
+                Container(
+                  height: 44,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFEFEFEF),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8), 
+                      topRight: Radius.circular(8),
                     ),
-                  ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        pokemon.name,
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Center(
